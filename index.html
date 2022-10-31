@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pixy</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <nav>
+        <ul class="menu-items">
+            <li><span class="color-icon">&#x1F3A8;</span> Color <span class="play-icon">&#9654;</span>
+            </li>
+            <div class="color-choice visually-hidden">
+                <label for="colorWheel">Pixel Color</label>
+                <input type="color" id="colorWheel" />
+                <input class="color-input" type="text" placeholder="#eee" />
+                <input class="color-square white" type="button" />
+                <input class="color-square black" type="button" />
+                <input class="color-square red" type="button" />
+                <input class="color-square blue" type="button" />
+                <input class="color-square purple" type="button" />
+                <input class="color-square yellow" type="button" />
+                <input class="color-square pinkish" type="button" />
+                <input class="color-square green" type="button" />
+                <input class="color-square light-green" type="button" />
+                <input class="color-square orange" type="button" />
+                <input class="color-square light-blue" type="button" />
+                <input class="color-square light-black" type="button" />
+                <input class="color-square gold" type="button" />
+                <input class="color-square turquoise" type="button" />
+                <input class="color-square light-gray" type="button" />
+            </div>
+            <li><span class="size-icon">&#x2699;</span> Size<span class="play-icon">&#9654;</span></li>
+            <div class="size-choice visually-hidden">
+                <label for="squareSizeInput">Square Size</label>
+                <input type="text" id="squareSizeInput" placeholder="30" />
+                <button class="update-size"
+                    title="Redraw the canvas with the specified size cells (careful this resets all the currently drawn paths)">Update</button>
+            </div>
+            <li><span class="zoom-icon">&#x1F50D;</span> Zoom <span class="play-icon">&#9654;</span></li>
+            <div class="zoom-choice visually-hidden">
+                <p class="zoom-amount">Zoom amount: 100%</p>
+                <input class="zoom-in-btn" type="button" value="+" />
+                <input class="zoom-out-btn" type="button" value="-" />
+                <input class="zoom-reset-btn" type="button" value="reset" />
+                <input class="zoom-step-size" type="text" placeholder="zoom step size..." />
+            </div>
+        </ul>
+        <div class="info">
+            <h1>Pixy <span>&#x2728;</h1>
+            <p><a href="https://github.com/tannerdolby" target="_blank">Edit on GitHub</a></p>
+        </div>
+    </nav>
+    <canvas id="canvas"></canvas>
+</body>
+</html>
