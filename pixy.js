@@ -33,7 +33,7 @@ const zoomAmountText = document.querySelector('.zoom-amount')
 const zoomStepSize = document.querySelector('.zoom-step-size')
 
 function drawPathIfIntersect(event) {
-    for (let i = 0; i < paths.length; i++) {
+  for (let i=0; i < paths.length; i++) {
         if (ctx.isPointInPath(paths[i], event.offsetX, event.offsetY)) {
             ctx.fillStyle = pixelColor
             ctx.fill(paths[i])
@@ -42,36 +42,36 @@ function drawPathIfIntersect(event) {
 }
 
 function checkForClass(classlist, item) {
-    if (!classlist) return false;
-    return Array.from(classlist).includes(item);
+  if (!classlist) return false;
+  return Array.from(classlist).includes(item);
 }
 
 function checkAndToggle(element, classlist, className) {
-    if (checkForClass(classlist, className)) {
+  if (checkForClass(classlist, className)) {
         element.classList.toggle('list-border')
         element.classList.toggle('visually-hidden')
-    }
+      }
 }
 
 function initMenu() {
-    Array.from(listItems).forEach(item => {
-        item.addEventListener('click', (e) => {
-            const spans = Array.from(e.target.querySelectorAll('span'))
-            const playIcon = e.target.querySelector('.play-icon')
+  Array.from(listItems).forEach(item => {
+    item.addEventListener('click', (e) => {
+      const spans = Array.from(e.target.querySelectorAll('span'))
+      const playIcon = e.target.querySelector('.play-icon')
 
-            if (e.target.tagName === "LI") e.target.classList.toggle('active')
+      if (e.target.tagName === "LI") e.target.classList.toggle('active')
 
-            if (playIcon) playIcon.classList.toggle('move')
+      if (playIcon) playIcon.classList.toggle('move')
 
-            spans.forEach(span => {
-                checkAndToggle(colorBlock, span.classList, 'color-icon')
-                checkAndToggle(sizeBlock, span.classList, 'size-icon')
-                checkAndToggle(zoomBlock, span.classList, 'zoom-icon')
-                checkAndToggle(screenshotBlock, span.classList, 'screenshot-icon')
-            })
-        })
+      spans.forEach(span => {
+        checkAndToggle(colorBlock, span.classList, 'color-icon')
+        checkAndToggle(sizeBlock, span.classList, 'size-icon')
+        checkAndToggle(zoomBlock, span.classList, 'zoom-icon')
+        checkAndToggle(screenshotBlock, span.classList, 'screenshot-icon')
+      })
     })
-    initColorSquares()
+  })
+  initColorSquares()
 }
 
 function drawGridRow(paths, y) {
@@ -82,25 +82,25 @@ function drawGridRow(paths, y) {
         ctx.fill(p)
         paths.push(p)
     }
-    return
+  return
 }
 
 function drawGrid(area) {
     for (let i = pageGap, j = 0; i < window.innerHeight - pageGap; i += area + cellGap, j++) {
         drawGridRow(paths, i)
     }
-    return
+  return
 }
 
 // Listen for DOM events
 colorInput.addEventListener('input', (evt) => {
-    pixelColor = evt.target.value;
-    ctx.fillStyle = evt.target.value;
+  pixelColor = evt.target.value;
+  ctx.fillStyle = evt.target.value;
 })
 
 colorPicker.addEventListener('input', (evt) => {
-    pixelColor = evt.target.value
-    colorInput.value = evt.target.value
+  pixelColor = evt.target.value
+  colorInput.value = evt.target.value
 })
 
 canvas.addEventListener('click', (event) => {
@@ -108,26 +108,26 @@ canvas.addEventListener('click', (event) => {
 })
 
 function initColorSquares() {
-    const rgbRegex = /\d+/gm
-    Array.from(colorSquares).forEach(square => {
-        square.addEventListener('click', (event) => {
-            const bg = window.getComputedStyle(event.target).backgroundColor
-            const rgb = bg.match(rgbRegex)
+  const rgbRegex = /\d+/gm
+  Array.from(colorSquares).forEach(square => {
+    square.addEventListener('click', (event) => {
+      const bg = window.getComputedStyle(event.target).backgroundColor
+      const rgb = bg.match(rgbRegex)
 
-            pixelColor = bg
-            ctx.fillStyle = bg
-            colorInput.value = bg
-        })
+      pixelColor = bg
+      ctx.fillStyle = bg
+      colorInput.value = bg
     })
+  })
 }
 
 updateSizeBtn.addEventListener('click', (event) => {
-    let context = (ctx);
-    context.canvas.width = window.innerWidth;
-    context.canvas.height = window.innerHeight;
-    area = +userInputCellSize.value
-    paths = []
-    drawGrid(area)
+  let context = (ctx);
+  context.canvas.width = window.innerWidth;
+  context.canvas.height = window.innerHeight;
+  area = +userInputCellSize.value
+  paths = []
+  drawGrid(area)
 })
 
 // TODO: implement redraw on resize (see debounce references)
@@ -135,9 +135,10 @@ window.addEventListener('resize', (e) => {
     let context = (ctx);
     context.canvas.width = window.innerWidth;
     context.canvas.height = window.innerHeight;
-
+  
     // TODO: redraw - but with the selected squares redrawn =)
     drawGrid(area)
+  console.log('PATHS RESIZE: ', paths.length)
     // ctx.fillStyle = 'blue'
     // for (let i = 0; i < paths.length; i++) {
     //     ctx.fill(paths[i])
@@ -145,38 +146,41 @@ window.addEventListener('resize', (e) => {
 })
 
 canvas.addEventListener('mousedown', (event) => {
-    canDraw = true
+  canDraw = true
 })
 
 canvas.addEventListener('mouseup', (event) => {
-    canDraw = false
+  canDraw = false
 })
 
 canvas.addEventListener('mousemove', (event) => {
-    if (canDraw) {
-        drawPathIfIntersect(event)
-    }
+  if (canDraw) {
+    drawPathIfIntersect(event)
+  }
 })
 
 zoomInBtn.addEventListener('click', (event) => {
-    zoomAmount += (parseInt(zoomStepSize.value) || 10)
-    zoomAmountText.textContent = `Zoom amount: ${zoomAmount}%`
-    canvas.style.transform = `scale(${zoomAmount}%)`
+  zoomAmount += (parseInt(zoomStepSize.value) || 10)
+  zoomAmountText.textContent = `Zoom amount: ${zoomAmount}%`
+  canvas.style.transform = `scale(${zoomAmount}%)`
 })
 
 zoomOutBtn.addEventListener('click', (event) => {
-    zoomAmount -= (zoomStepSize.value || 10)
-    zoomAmountText.textContent = `Zoom amount: ${zoomAmount}%`
-    canvas.style.transform = `scale(${zoomAmount}%)`
+  zoomAmount -= (zoomStepSize.value || 10)
+  zoomAmountText.textContent = `Zoom amount: ${zoomAmount}%`
+  canvas.style.transform = `scale(${zoomAmount}%)`
 })
 
 zoomResetBtn.addEventListener('click', (event) => {
-    zoomAmount = 100
-    zoomAmountText.textContent = `Zoom amount: ${zoomAmount}%`
-    canvas.style.transform = `scale(${zoomAmount}%)`
+  zoomAmount = 100
+  zoomAmountText.textContent = `Zoom amount: ${zoomAmount}%`
+  canvas.style.transform = `scale(${zoomAmount}%)`
 })
 
 initMenu()
+
+// Initial draw
 drawGrid(area)
 
+// allPaths.push(paths)
 localStorage.setItem('paths', allPaths)
